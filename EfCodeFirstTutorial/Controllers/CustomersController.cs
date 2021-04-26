@@ -28,6 +28,7 @@ namespace EfCodeFirstTutorial.Controllers {
             if(customer.Id != 0) {
                 throw new Exception("Input must have Id set to zero");
             }
+            customer.Created = DateTime.Now;
             _context.Customers.Add(customer);
             var rowsAffected = await _context.SaveChangesAsync();
             if(rowsAffected != 1) {

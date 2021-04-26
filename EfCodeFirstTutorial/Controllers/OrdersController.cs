@@ -51,6 +51,19 @@ namespace EfCodeFirstTutorial.Controllers {
             return;
         }
 
+        public async Task<Order> Remove(int id) {
+            var order = await _context.Orders.FindAsync(id);
+            if(order == null) {
+                throw new Exception("Not found");
+            }
+            _context.Orders.Remove(order);
+            var rowsAffected = await _context.SaveChangesAsync();
+            if(rowsAffected != 1) {
+                throw new Exception("Remove failed!");
+            }
+            return order;
+        }
+
         public OrdersController() {
             _context = new AppDbContext();
 

@@ -50,6 +50,19 @@ namespace EfCodeFirstTutorial.Controllers {
             }
             return;
         }
+        public async Task<Orderline> Remove(int id) {
+            var orderline = await _context.Orderlines.FindAsync(id);
+            if(orderline == null) {
+                throw new Exception("Not found");
+            }
+            _context.Orderlines.Remove(orderline);
+            var rowsAffected = await _context.SaveChangesAsync();
+            if(rowsAffected != 1) {
+                throw new Exception("Remove failed!");
+            }
+            return orderline;
+        }
+
 
         public OrderlinesController() {
             _context = new AppDbContext();
